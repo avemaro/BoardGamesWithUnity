@@ -16,5 +16,15 @@ namespace Tests
             Assert.AreEqual(board.GetColor(Cell.d4), PieceColor.white);
             Assert.AreEqual(board.GetColor(Cell.e5), PieceColor.white);
         }
+
+        [Test]
+        public void TestPutPieceAlternately() {
+            var board = new Board();
+            Assert.AreEqual(board.colorInTurn, PieceColor.black);
+            board.PutPiece(Cell.d3);
+            Assert.AreEqual(board.colorInTurn, PieceColor.white);
+            board.PutPiece(Cell.c5);
+            Assert.AreEqual(board.colorInTurn, PieceColor.black);
+        }
     }
 }
