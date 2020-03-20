@@ -635,6 +635,12 @@
       <HintPath>/Applications/Unity/Hub/Editor/2019.3.2f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Project.csproj">
+      <Project>{1E491489-A243-4F14-7596-C13EC28254F2}</Project>
+      <Name>Project</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
