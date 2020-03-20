@@ -20,11 +20,11 @@ namespace Tests
         [Test]
         public void TestPutPieceAlternately() {
             var board = new Board();
-            Assert.AreEqual(board.colorInTurn, PieceColor.black);
+            Assert.AreEqual(board.ColorInTurn, PieceColor.black);
             board.PutPiece(Cell.d3);
-            Assert.AreEqual(board.colorInTurn, PieceColor.white);
+            Assert.AreEqual(board.ColorInTurn, PieceColor.white);
             board.PutPiece(Cell.c5);
-            Assert.AreEqual(board.colorInTurn, PieceColor.black);
+            Assert.AreEqual(board.ColorInTurn, PieceColor.black);
         }
     }
 }

@@ -6,6 +6,7 @@ using System;
 public class Board
 {
     List<Piece> pieces = new List<Piece>();
+    public PieceColor ColorInTurn { get; private set; } = PieceColor.black;
 
     public Board() {
         pieces.Add(new Piece(this, PieceColor.black, Cell.d5));
@@ -27,6 +28,10 @@ public class Board
         foreach (var piece in pieces)
             if (piece.Position == cell) return piece;
         return null;
+    }
+
+    public void PutPiece(Cell cell) {
+
     }
 }
 
