@@ -30,8 +30,9 @@ public class Board
         return null;
     }
 
-    public void PutPiece(Cell cell) {
+    public bool PutPiece(Cell cell) {
         ChangeTurn();
+        return false;
     }
 
     void ChangeTurn() {
