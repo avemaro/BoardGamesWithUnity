@@ -50,10 +50,8 @@ public class Board {
         pieces.Add(newPiece);
         newPiece.Work();
 
-        if (Reverse()) {
-            ChangeTurn();
-            return true;
-        }
+        if (Reverse()) return true;
+
         pieces.Remove(newPiece);
         return false;
     }
@@ -62,6 +60,7 @@ public class Board {
         var result = false;
         foreach (var piece in pieces)
             if (piece.Reverse()) result = true;
+        if (result) ChangeTurn();
         return result;
     }
 
