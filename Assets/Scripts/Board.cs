@@ -44,6 +44,11 @@ public class Board {
         return null;
     }
 
+    public void PutPiece(params Cell[] cells) {
+        foreach (var cell in cells)
+            PutPiece(cell);
+    }
+
     public bool PutPiece(Cell cell) {
         if (GetPiece(cell) != null) return false;
         var newPiece = new Piece(this, ColorInTurn, cell);
@@ -53,6 +58,10 @@ public class Board {
         if (Reverse()) return true;
 
         pieces.Remove(newPiece);
+        return false;
+    }
+
+    public bool Check(Cell[] blackCells, Cell[] whiteCells) {
         return false;
     }
 
