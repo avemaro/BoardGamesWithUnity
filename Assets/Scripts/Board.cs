@@ -50,7 +50,7 @@ public class Board {
     }
 
     public bool PutPiece(Cell cell) {
-        if (GetPiece(cell) != null) return false;
+        if (!IsNone(cell)) return false;
         var newPiece = new Piece(this, ColorInTurn, cell);
         pieces.Add(newPiece);
         newPiece.Work();
@@ -81,14 +81,9 @@ public class Board {
         foreach (var piece in pieces)
             if (piece.Reverse()) result = true;
         if (result) ChangeTurn();
-
-        foreach (var piece in pieces)
-            piece.ResetState();
+        ResetPiecesState();
 
         if (NoCellToPut()) ChangeTurn();
-
-        foreach (var piece in pieces)
-            piece.ResetState();
 
         return result;
     }
@@ -102,15 +97,23 @@ public class Board {
             pieces.Remove(newPiece);
 
             foreach (var piece in pieces)
-                if (piece.IsReadyToReverse) return false;
+                if (piece.IsReadyToReverse) {
+                    ResetPiecesState();
+                    return false;
+                }
         }
-
+        ResetPiecesState();
         return true;
     }
 
     void ChangeTurn() {
         if (ColorInTurn == PieceColor.black) ColorInTurn = PieceColor.white;
         else if (ColorInTurn == PieceColor.white) ColorInTurn = PieceColor.black;
+    }
+
+    void ResetPiecesState() {
+        foreach (var piece in pieces)
+            piece.ResetState();
     }
 
     public void PrintBoard() {
