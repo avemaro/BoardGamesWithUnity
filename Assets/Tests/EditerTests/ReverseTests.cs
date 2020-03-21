@@ -37,5 +37,13 @@ namespace Tests
             Assert.True(board.PutPiece(Cell.c5));
             Assert.AreEqual(PieceColor.white, board.GetColor(Cell.c5));
         }
+
+        [Test]
+        public void Test4APieceHasReveresed() {
+            var board = new Board();
+            Assert.True(board.PutPiece(Cell.d3));
+            Assert.True(board.IsBlack(Cell.d3));
+            Assert.True(board.IsBlack(Cell.d4));
+        }
     }
 }

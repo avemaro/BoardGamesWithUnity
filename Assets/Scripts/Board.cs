@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Board
-{
+public class Board {
     List<Piece> pieces = new List<Piece>();
     public PieceColor ColorInTurn { get; private set; } = PieceColor.black;
 
