@@ -56,6 +56,7 @@ namespace Tests
             var whiteCells = new Cell[] { Cell.d5, Cell.e5 };
             Assert.False(board.Check(blackCells, whiteCells));
             board.PutPiece(Cell.d3, Cell.c5, Cell.b6);
+            board.PrintBoard();
             Assert.True(board.Check(blackCells, whiteCells));
 
             board.PutPiece(Cell.d2);

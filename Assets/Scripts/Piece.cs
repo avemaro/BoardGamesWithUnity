@@ -15,7 +15,7 @@ public class Piece {
         Position = position;
     }
 
-    public void Work() {
+    public void Ready() {
         foreach (var direction in (Direction[])Enum.GetValues(typeof(Direction))) {
             var nextPiece = GetNextPiece(direction);
             if (nextPiece == null) continue;
@@ -27,7 +27,7 @@ public class Piece {
         IsReadyToReverse = false;
     }
 
-    public bool Reverse() {
+    public bool Excute() {
         if (!IsReadyToReverse) return false;
         if (Color == PieceColor.black) Color = PieceColor.white;
         else if (Color == PieceColor.white) Color = PieceColor.black;

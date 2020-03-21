@@ -55,9 +55,9 @@ public class Board {
         if (!IsNone(cell)) return false;
         var newPiece = new Piece(this, ColorInTurn, cell);
         pieces.Add(newPiece);
-        newPiece.Work();
+        newPiece.Ready();
 
-        if (Reverse()) return true;
+        if (Excute()) return true;
 
         pieces.Remove(newPiece);
         return false;
@@ -78,10 +78,10 @@ public class Board {
         return true;
     }
 
-    bool Reverse() {
+    bool Excute() {
         var result = false;
         foreach (var piece in pieces)
-            if (piece.Reverse()) result = true;
+            if (piece.Excute()) result = true;
         if (result) ChangeTurn();
         ResetPiecesState();
 
@@ -96,7 +96,7 @@ public class Board {
             if (!IsNone(cell)) continue;
             var newPiece = new Piece(this, ColorInTurn, cell);
             pieces.Add(newPiece);
-            newPiece.Work();
+            newPiece.Ready();
             pieces.Remove(newPiece);
 
             foreach (var piece in pieces)
