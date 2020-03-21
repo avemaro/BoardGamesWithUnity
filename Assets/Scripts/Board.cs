@@ -7,7 +7,7 @@ public class Board {
     List<Piece> pieces = new List<Piece>();
     public PieceColor ColorInTurn { get; private set; } = PieceColor.black;
     public bool IsGameOver { get; private set; }
-    public PieceColor Winner { get; private set; }
+    public PieceColor Winner { get; private set; } = PieceColor.none;
 
     public Board() {
         pieces.Add(new Piece(this, PieceColor.black, Cell.d5));
@@ -86,6 +86,7 @@ public class Board {
         ResetPiecesState();
 
         if (NoCellToPut()) ChangeTurn();
+        if (NoCellToPut()) DecideWinner();
 
         return result;
     }
@@ -116,6 +117,19 @@ public class Board {
     void ResetPiecesState() {
         foreach (var piece in pieces)
             piece.ResetState();
+    }
+
+    void DecideWinner() {
+        IsGameOver = true;
+        int numberOfblack = 0;
+        int numberOfwhite = 0;
+        foreach (var cell in CellExtend.AllCases) {
+            if (GetColor(cell) == PieceColor.black) numberOfblack++;
+            if (GetColor(cell) == PieceColor.white) numberOfwhite++;
+        }
+        if (numberOfblack > numberOfwhite) Winner = PieceColor.black;
+        if (numberOfblack < numberOfwhite) Winner = PieceColor.white;
+        if (numberOfblack == numberOfwhite) Winner = PieceColor.none;
     }
 
     public void PrintBoard() {
