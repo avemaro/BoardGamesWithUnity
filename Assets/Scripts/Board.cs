@@ -123,9 +123,9 @@ public class Board {
         IsGameOver = true;
         int numberOfblack = 0;
         int numberOfwhite = 0;
-        foreach (var cell in CellExtend.AllCases) {
-            if (GetColor(cell) == PieceColor.black) numberOfblack++;
-            if (GetColor(cell) == PieceColor.white) numberOfwhite++;
+        foreach (var piece in pieces) {
+            if (piece.Color == PieceColor.black) numberOfblack++;
+            if (piece.Color == PieceColor.white) numberOfwhite++;
         }
         if (numberOfblack > numberOfwhite) Winner = PieceColor.black;
         if (numberOfblack < numberOfwhite) Winner = PieceColor.white;
