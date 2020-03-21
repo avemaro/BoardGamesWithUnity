@@ -27,4 +27,12 @@ public static class PieceColorExtend {
         }
         return false;
     }
+
+    public static string GetString(this PieceColor pieceColor) {
+        switch (pieceColor) {
+            case PieceColor.black: return "B";
+            case PieceColor.white: return "W";
+        }
+        return "*";
+    }
 }

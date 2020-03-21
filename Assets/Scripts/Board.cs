@@ -62,7 +62,18 @@ public class Board {
     }
 
     public bool Check(Cell[] blackCells, Cell[] whiteCells) {
-        return false;
+        var noneCells = new List<Cell>(CellExtend.AllCases);
+        foreach (Cell cell in blackCells) {
+            if (GetColor(cell) != PieceColor.black) return false;
+            noneCells.Remove(cell);
+        }
+        foreach (Cell cell in whiteCells) {
+            if (GetColor(cell) != PieceColor.white) return false;
+            noneCells.Remove(cell);
+        }
+        foreach (Cell cell in noneCells)
+            if (GetColor(cell) != PieceColor.none) return false;
+        return true;
     }
 
     bool Reverse() {
@@ -70,11 +81,26 @@ public class Board {
         foreach (var piece in pieces)
             if (piece.Reverse()) result = true;
         if (result) ChangeTurn();
+
+        foreach (var piece in pieces)
+            piece.ResetState();
+
         return result;
     }
 
     void ChangeTurn() {
         if (ColorInTurn == PieceColor.black) ColorInTurn = PieceColor.white;
         else if (ColorInTurn == PieceColor.white) ColorInTurn = PieceColor.black;
+    }
+
+    public void PrintBoard() {
+        for (var rank = 0; rank < 8; rank++) {
+            string log = "";
+            for (var file = 0; file < 8; file++) {
+                Cell cell = (Cell)CellExtend.AllCases.GetValue((rank * 8) + file);
+                log += GetColor(cell).GetString();
+            }
+            Debug.Log(log);
+        }
     }
 }
