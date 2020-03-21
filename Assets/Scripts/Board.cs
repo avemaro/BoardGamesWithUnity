@@ -14,6 +14,7 @@ public class Board {
         pieces.Add(new Piece(this, PieceColor.white, Cell.e5));
     }
 
+    #region Color
     public PieceColor GetColor(Cell? cell) {
         if (cell == null) return PieceColor.none;
 
@@ -21,6 +22,19 @@ public class Board {
         if (piece == null) return PieceColor.none;
         return piece.Color;
     }
+
+    public bool IsBlack(Cell? cell) {
+        return GetColor(cell) == PieceColor.black;
+    }
+
+    public bool IsWhite(Cell? cell) {
+        return GetColor(cell) == PieceColor.white;
+    }
+
+    public bool IsNone(Cell? cell) {
+        return GetColor(cell) == PieceColor.none;
+    }
+    #endregion
 
     Piece GetPiece(Cell? cell) {
         if (cell == null) return null;
