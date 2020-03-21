@@ -39,14 +39,14 @@ public static class CellExtend {
     public static File[] fileArray = new File[]
         { File.a, File.b, File.c, File.d, File.e, File.f, File.g, File.h };
     public static File GetFile(this Cell cell) {
-        var div = (int)cell / 8;
+        var div = (int)cell % 8;
         return fileArray[div];
     }
     public enum Rank { one, two, three, four, five, six, seven, eight }
     public static Rank[] rankArray = new Rank[]
         {Rank.one, Rank.two, Rank.three, Rank.four, Rank.five, Rank.six, Rank.seven, Rank.eight};
     public static Rank GetRank(this Cell cell) {
-        var mod = (int)cell % 8;
+        var mod = (int)cell / 8;
         return rankArray[mod];
     }
 }

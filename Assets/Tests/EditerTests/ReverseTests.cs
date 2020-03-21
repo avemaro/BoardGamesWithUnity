@@ -70,5 +70,16 @@ namespace Tests
             Assert.False(board.PutPiece(Cell.e3));
             Assert.True(board.PutPiece(Cell.d3));
         }
+
+        [Test]
+        public void Test7PassTurn() {
+            var board = new Board();
+            board.PutPiece(Cell.f5, Cell.f6, Cell.d3, Cell.g5,
+                           Cell.h5, Cell.h4, Cell.f7, Cell.h6);
+            var blackCells = new Cell[] { Cell.d3, Cell.d4, Cell.d5, Cell.e4, Cell.e5, Cell.f5, Cell.f6, Cell.f7 };
+            var whiteCells = new Cell[] { Cell.g5, Cell.h4, Cell.h5, Cell.h6 };
+            Assert.True(board.Check(blackCells, whiteCells));
+            Assert.AreEqual(PieceColor.white, board.ColorInTurn);   //Expected: white, But was: black
+        }
     }
 }
