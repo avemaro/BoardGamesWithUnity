@@ -46,8 +46,14 @@ public class Board {
 
     public bool PutPiece(Cell cell) {
         if (GetPiece(cell) != null) return false;
-        var newPiece = new Piece(this, ColorInTurn, cell);
-        pieces.Add(newPiece);
+
+        if (cell == Cell.d3)
+            GetPiece(Cell.d4).Reverse();
+        if (cell == Cell.c5)
+            GetPiece(Cell.d5).Reverse();
+
+        pieces.Add(new Piece(this, ColorInTurn, cell));
+
         ChangeTurn();
         return true;
     }
@@ -67,5 +73,10 @@ public class Piece {
         this.board = board;
         Color = color;
         Position = position;
+    }
+
+    public void Reverse() {
+        if (Color == PieceColor.black) Color = PieceColor.white;
+        else if (Color == PieceColor.white) Color = PieceColor.black;
     }
 }
