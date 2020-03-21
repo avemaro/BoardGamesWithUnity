@@ -6,6 +6,8 @@ using System;
 public class Board {
     List<Piece> pieces = new List<Piece>();
     public PieceColor ColorInTurn { get; private set; } = PieceColor.black;
+    public bool IsGameOver { get; private set; }
+    public PieceColor Winner { get; private set; }
 
     public Board() {
         pieces.Add(new Piece(this, PieceColor.black, Cell.d5));
