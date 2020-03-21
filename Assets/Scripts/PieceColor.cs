@@ -14,4 +14,17 @@ public static class PieceColorExtend {
         }
         return PieceColor.none;
     }
+
+    public static bool IsSame(this PieceColor pieceColor, PieceColor other) {
+        if (pieceColor == PieceColor.none) return false;
+        return pieceColor == other;
+    }
+
+    public static bool IsOpposite(this PieceColor pieceColor, PieceColor other) {
+        switch (pieceColor) {
+            case PieceColor.black: return other == PieceColor.white;
+            case PieceColor.white: return other == PieceColor.black;
+        }
+        return false;
+    }
 }

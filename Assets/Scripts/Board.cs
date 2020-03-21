@@ -14,6 +14,7 @@ public class Board {
         pieces.Add(new Piece(this, PieceColor.white, Cell.e5));
     }
 
+    #region Color
     public PieceColor GetColor(Cell? cell) {
         if (cell == null) return PieceColor.none;
 
@@ -22,7 +23,20 @@ public class Board {
         return piece.Color;
     }
 
-    Piece GetPiece(Cell? cell) {
+    public bool IsBlack(Cell? cell) {
+        return GetColor(cell) == PieceColor.black;
+    }
+
+    public bool IsWhite(Cell? cell) {
+        return GetColor(cell) == PieceColor.white;
+    }
+
+    public bool IsNone(Cell? cell) {
+        return GetColor(cell) == PieceColor.none;
+    }
+    #endregion
+
+    public Piece GetPiece(Cell? cell) {
         if (cell == null) return null;
 
         foreach (var piece in pieces)
@@ -34,24 +48,25 @@ public class Board {
         if (GetPiece(cell) != null) return false;
         var newPiece = new Piece(this, ColorInTurn, cell);
         pieces.Add(newPiece);
-        ChangeTurn();
-        return true;
+        newPiece.Work();
+
+        if (Reverse()) {
+            ChangeTurn();
+            return true;
+        }
+        pieces.Remove(newPiece);
+        return false;
+    }
+
+    bool Reverse() {
+        var result = false;
+        foreach (var piece in pieces)
+            if (piece.Reverse()) result = true;
+        return result;
     }
 
     void ChangeTurn() {
         if (ColorInTurn == PieceColor.black) ColorInTurn = PieceColor.white;
         else if (ColorInTurn == PieceColor.white) ColorInTurn = PieceColor.black;
-    }
-}
-
-public class Piece {
-    Board board;
-    public PieceColor Color { get; private set; }
-    public Cell Position { get; private set; }
-
-    public Piece(Board board, PieceColor color, Cell position) {
-        this.board = board;
-        Color = color;
-        Position = position;
     }
 }
