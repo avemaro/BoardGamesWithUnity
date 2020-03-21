@@ -85,7 +85,27 @@ public class Board {
         foreach (var piece in pieces)
             piece.ResetState();
 
+        if (NoCellToPut()) ChangeTurn();
+
+        foreach (var piece in pieces)
+            piece.ResetState();
+
         return result;
+    }
+
+    bool NoCellToPut() {
+        foreach (var cell in CellExtend.AllCases) {
+            if (!IsNone(cell)) continue;
+            var newPiece = new Piece(this, ColorInTurn, cell);
+            pieces.Add(newPiece);
+            newPiece.Work();
+            pieces.Remove(newPiece);
+
+            foreach (var piece in pieces)
+                if (piece.IsReadyToReverse) return false;
+        }
+
+        return true;
     }
 
     void ChangeTurn() {
