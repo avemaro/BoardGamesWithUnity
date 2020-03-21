@@ -19,6 +19,7 @@ public class Board
         if (cell == null) return PieceColor.none;
 
         var piece = GetPiece(cell);
+        if (piece == null) return PieceColor.none;
         return piece.Color;
     }
 
@@ -31,8 +32,11 @@ public class Board
     }
 
     public bool PutPiece(Cell cell) {
+        if (GetPiece(cell) != null) return false;
+        var newPiece = new Piece(this, ColorInTurn, cell);
+        pieces.Add(newPiece);
         ChangeTurn();
-        return false;
+        return true;
     }
 
     void ChangeTurn() {
