@@ -47,10 +47,7 @@ public class Board {
     public bool PutPiece(Cell cell) {
         if (GetPiece(cell) != null) return false;
 
-        if (cell == Cell.d3)
-            GetPiece(Cell.d4).Reverse();
-        if (cell == Cell.c5)
-            GetPiece(Cell.d5).Reverse();
+        ReversePieces(cell);
 
         pieces.Add(new Piece(this, ColorInTurn, cell));
 
@@ -58,9 +55,39 @@ public class Board {
         return true;
     }
 
+    void ReversePieces(Cell nextMove) {
+        var pinchedPieces = GetPinchedPieces(nextMove); //打った石と自分の石とで挟んだ相手の石をリストアップする
+
+        foreach (var piece in pinchedPieces) //それらの石を裏返す。
+            piece.Reverse();
+    }
+
+    List<Piece> GetPinchedPieces(Cell nextMove) {
+        var pinchedPieces = new List<Piece>();
+        foreach (var direction in Enum.GetValues(typeof(Direction)))
+            pinchedPieces.AddRange(GetPinchedPieces(nextMove, (Direction)direction));
+        return pinchedPieces;
+    }
+
+    List<Piece> GetPinchedPieces(Cell nextMove, Direction direction) {
+        var reversiblePieces = new List<Piece>();
+
+        var nextCell = nextMove.Next(direction);   //指定方向の隣のセルを得る
+        var nextPiece = GetPiece(nextCell);   //隣の石を得る
+        var nextCell2 = nextMove.Next(direction, 2);   //隣の隣のセルを得る
+        var nextPiece2 = GetPiece(nextCell2);   //隣の隣の石を得る
+
+        if (nextPiece == null || nextPiece2 == null) return reversiblePieces;
+
+        if (nextPiece.IsOpposite(ColorInTurn)   //隣の石が手番の色と逆で、
+            && nextPiece2.IsSame(ColorInTurn)) {   //隣の隣の色が同じなら
+            reversiblePieces.Add(nextPiece);  //隣の駒をリストに加える
+        }
+        return reversiblePieces;
+    }
+
     void ChangeTurn() {
-        if (ColorInTurn == PieceColor.black) ColorInTurn = PieceColor.white;
-        else if (ColorInTurn == PieceColor.white) ColorInTurn = PieceColor.black;
+        ColorInTurn = ColorInTurn.ReversedColor();
     }
 }
 
@@ -76,7 +103,15 @@ public class Piece {
     }
 
     public void Reverse() {
-        if (Color == PieceColor.black) Color = PieceColor.white;
-        else if (Color == PieceColor.white) Color = PieceColor.black;
+        Color = Color.ReversedColor();
+    }
+
+    public bool IsSame(PieceColor pieceColor) {
+        return pieceColor == Color;
+    }
+
+    public bool IsOpposite(PieceColor pieceColor) {
+        if (pieceColor == PieceColor.none) return false;
+        return pieceColor == Color.ReversedColor();
     }
 }
